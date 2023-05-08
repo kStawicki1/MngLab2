@@ -169,14 +169,11 @@ public class CalculatorParser extends Parser {
 
 	@SuppressWarnings("CheckReturnValue")
 	public static class MultiplyingExpressionContext extends ParserRuleContext {
-		public IntegralExpressionContext integralExpression() {
-			return getRuleContext(IntegralExpressionContext.class,0);
+		public List<IntegralExpressionContext> integralExpression() {
+			return getRuleContexts(IntegralExpressionContext.class);
 		}
-		public List<MultiplyingExpressionContext> multiplyingExpression() {
-			return getRuleContexts(MultiplyingExpressionContext.class);
-		}
-		public MultiplyingExpressionContext multiplyingExpression(int i) {
-			return getRuleContext(MultiplyingExpressionContext.class,i);
+		public IntegralExpressionContext integralExpression(int i) {
+			return getRuleContext(IntegralExpressionContext.class,i);
 		}
 		public List<TerminalNode> MULT() { return getTokens(CalculatorParser.MULT); }
 		public TerminalNode MULT(int i) {
@@ -205,36 +202,33 @@ public class CalculatorParser extends Parser {
 		enterRule(_localctx, 2, RULE_multiplyingExpression);
 		int _la;
 		try {
-			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(16);
 			integralExpression();
 			setState(21);
 			_errHandler.sync(this);
-			_alt = getInterpreter().adaptivePredict(_input,1,_ctx);
-			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
-				if ( _alt==1 ) {
-					{
-					{
-					setState(17);
-					_la = _input.LA(1);
-					if ( !(_la==MULT || _la==DIV) ) {
-					_errHandler.recoverInline(this);
-					}
-					else {
-						if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
-						_errHandler.reportMatch(this);
-						consume();
-					}
-					setState(18);
-					multiplyingExpression();
-					}
-					} 
+			_la = _input.LA(1);
+			while (_la==MULT || _la==DIV) {
+				{
+				{
+				setState(17);
+				_la = _input.LA(1);
+				if ( !(_la==MULT || _la==DIV) ) {
+				_errHandler.recoverInline(this);
+				}
+				else {
+					if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
+					_errHandler.reportMatch(this);
+					consume();
+				}
+				setState(18);
+				integralExpression();
+				}
 				}
 				setState(23);
 				_errHandler.sync(this);
-				_alt = getInterpreter().adaptivePredict(_input,1,_ctx);
+				_la = _input.LA(1);
 			}
 			}
 		}
@@ -419,7 +413,7 @@ public class CalculatorParser extends Parser {
 		"\t\u0001\u0000\u0000\u0000\f\u000f\u0001\u0000\u0000\u0000\r\u000b\u0001"+
 		"\u0000\u0000\u0000\r\u000e\u0001\u0000\u0000\u0000\u000e\u0001\u0001\u0000"+
 		"\u0000\u0000\u000f\r\u0001\u0000\u0000\u0000\u0010\u0015\u0003\u0004\u0002"+
-		"\u0000\u0011\u0012\u0007\u0001\u0000\u0000\u0012\u0014\u0003\u0002\u0001"+
+		"\u0000\u0011\u0012\u0007\u0001\u0000\u0000\u0012\u0014\u0003\u0004\u0002"+
 		"\u0000\u0013\u0011\u0001\u0000\u0000\u0000\u0014\u0017\u0001\u0000\u0000"+
 		"\u0000\u0015\u0013\u0001\u0000\u0000\u0000\u0015\u0016\u0001\u0000\u0000"+
 		"\u0000\u0016\u0003\u0001\u0000\u0000\u0000\u0017\u0015\u0001\u0000\u0000"+

@@ -1,7 +1,7 @@
 grammar Calculator;
  
 expression: multiplyingExpression ((PLUS | MINUS) multiplyingExpression)*;
-multiplyingExpression: integralExpression ((MULT | DIV) multiplyingExpression)*;
+multiplyingExpression: integralExpression ((MULT | DIV) integralExpression)*;
 integralExpression: MINUS powExpression| powExpression;
 powExpression: INT (POW (INT | LPAREN multiplyingExpression RPAREN))*;
 

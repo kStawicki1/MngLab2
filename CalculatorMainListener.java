@@ -30,14 +30,16 @@ public class CalculatorMainListener extends CalculatorBaseListener {
 
     @Override
     public void exitMultiplyingExpression(CalculatorParser.MultiplyingExpressionContext ctx) {
-        if (ctx.DIV().size() != 0 || ctx.MULT().size() != 0) {
-            double result;
-            List<Double> tempList = getNumbersFromQueue(numbers.size() - 2);
-            if(ctx.DIV().size() != 0) {
-                result = numbers.pop() / numbers.pop();
-            } else {
-                result = numbers.pop() * numbers.pop();
-            }
+        int expressionSize = ctx.DIV().size() + ctx.MULT().size();
+        if (expressionSize != 0) {
+            List<Double> tempList = getNumbersFromQueue(numbers.size() - expressionSize - 1);
+            double result = numbers.pop();
+            for(int i = 1; i < ctx.getChildCount(); i+=2)
+                if(ctx.getChild(i).getText().equals("/")) {
+                result /= numbers.pop();
+                } else if (ctx.getChild(i).getText().equals("*")){
+                result *= numbers.pop();
+                }
             populateQueue(tempList);
             numbers.add(result);
         }
@@ -75,11 +77,11 @@ public class CalculatorMainListener extends CalculatorBaseListener {
 
     public static void main(String[] args) throws Exception {
 
-        System.out.println("Result = " + calc("3 + 2 - 1)"));
-        System.out.println("Result = " + calc("3 + -3 + 2)"));
-        System.out.println("Result = " + calc("3 * -3 + 2 )"));
+        System.out.println("Result = " + calc("3 + 2 - 1"));
+        System.out.println("Result = " + calc("3 + -3 + 2"));
+        System.out.println("Result = " + calc("2 + 5 * 6 / 5 * 3 "));
         System.out.println("Result = " + calc("3^2 + 2"));
-        System.out.println("Result = " + calc("4^(1/2) + -2*4*2 + -2/2"));
+        System.out.println("Result = " + calc("4^(1/2)  -2*4*2  -2/2"));
     }
 
     public static Double calc(String expression) {
