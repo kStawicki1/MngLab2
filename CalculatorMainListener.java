@@ -17,7 +17,12 @@ public class CalculatorMainListener extends CalculatorBaseListener {
     public void exitExpression(CalculatorParser.ExpressionContext ctx) {
         double value = numbers.pop();
         for (int i = 1; i < ctx.getChildCount(); i +=2) {
-            value += numbers.pop();
+            if(ctx.getChild(i).getText().equals("+")) {
+                value += numbers.pop();
+            } else if(ctx.getChild(i).getText().equals("-")) {
+                value -= numbers.pop();
+            }
+
         }
         numbers.add(value);
         super.exitExpression(ctx);
@@ -70,7 +75,7 @@ public class CalculatorMainListener extends CalculatorBaseListener {
 
     public static void main(String[] args) throws Exception {
 
-        System.out.println("Result = " + calc("3 + 2 + 1)"));
+        System.out.println("Result = " + calc("3 + 2 - 1)"));
         System.out.println("Result = " + calc("3 + -3 + 2)"));
         System.out.println("Result = " + calc("3 * -3 + 2 )"));
         System.out.println("Result = " + calc("3^2 + 2"));
